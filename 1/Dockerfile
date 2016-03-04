@@ -10,7 +10,7 @@ FROM centos:centos7
 # Environment:
 # * $JENKINS_PASSWORD - Password for the Jenkins 'admin' user.
 
-MAINTAINER Ben Parees <bparees@redhat.com>
+MAINTAINER Robert Greathouse <cyotee@gmail.com>
 
 ENV JENKINS_VERSION=1.642 \
     HOME=/var/lib/jenkins \
@@ -47,6 +47,23 @@ RUN /usr/local/bin/plugins.sh /opt/openshift/base-plugins.txt && \
     chown -R 1001:0 /opt/openshift && \
     /usr/local/bin/fix-permissions /opt/openshift && \
     /usr/local/bin/fix-permissions /var/lib/jenkins
+
+ENV GOVER="1.6" \
+    GOROOT="/opt/go" \
+    PATH="$PATH" \
+    GOWORK="/work" \
+    GOPATH="${GOROOT}${GOWORK}" \
+    PATH="${PATH}:${GOROOT}/bin:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/"
+
+RUN mkdir -p $GOROOT$GOWORK && \
+    chown -R 1001:0 $GOROOT && \
+    cd $GOROOT && \
+    curl https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz && \
+    tar -xzf go$GOVER.linux-amd64.tar.gz && \
+    rm go$GOVER.linux-amd64.tar.gz && \
+    go get github.com/openshift/source-to-image && \
+    cd ${GOPATH}/src/github.com/openshift/source-to-image && \
+    hack/build-go.sh
 
 VOLUME ["/var/lib/jenkins"]
 
