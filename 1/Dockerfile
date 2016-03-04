@@ -48,6 +48,9 @@ RUN /usr/local/bin/plugins.sh /opt/openshift/base-plugins.txt && \
     /usr/local/bin/fix-permissions /opt/openshift && \
     /usr/local/bin/fix-permissions /var/lib/jenkins
 
+RUN yum install -y docker && \
+    usermod -a -G docker 1001
+
 ENV GOVER="1.6" \
     GOROOT="/opt/go" \
     PATH="$PATH" \
