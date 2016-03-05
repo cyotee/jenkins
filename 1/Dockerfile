@@ -52,8 +52,9 @@ RUN yum install -y docker
 
 ENV GOVER="1.6" \
     GOROOT="/opt/go" \
-    GOWORK="/work" \
-    GOPATH=${GOROOT}${GOWORK} \
+    GOWORK="/work"
+
+ENV GOPATH=${GOROOT}${GOWORK} \
     PATH=${PATH}:${GOROOT}/bin:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/
 
 RUN env
