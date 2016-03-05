@@ -57,6 +57,8 @@ ENV GOVER="1.6" \
     GOPATH="${GOROOT}${GOWORK}" \
     PATH="${PATH}:${GOROOT}/bin:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/"
 
+RUN env
+
 RUN mkdir -p $GOROOT$GOWORK && \
     chown -R 1001:0 $GOROOT && \
     cd $GOROOT && \
