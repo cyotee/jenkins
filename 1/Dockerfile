@@ -49,6 +49,7 @@ RUN /usr/local/bin/plugins.sh /opt/openshift/base-plugins.txt && \
     /usr/local/bin/fix-permissions /var/lib/jenkins
 
 RUN yum install -y docker && \
+    groupadd docker && \
     usermod -a -g docker -u 1001
 
 ENV GOVER="1.6" \
