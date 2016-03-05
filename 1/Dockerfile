@@ -60,7 +60,6 @@ RUN mkdir -p ${GOROOT}${GOWORK} && \
     chown -R 1001:0 ${GOROOT} && \
     cd ${GOROOT} && \
     curl https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz | tar -xzf && \
-    rm go1.6.linux-amd64.tar.gz && \
     go get github.com/openshift/source-to-image && \
     cd ${GOPATH}/src/github.com/openshift/source-to-image && \
     hack/build-go.sh
