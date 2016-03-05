@@ -48,27 +48,6 @@ RUN /usr/local/bin/plugins.sh /opt/openshift/base-plugins.txt && \
     /usr/local/bin/fix-permissions /opt/openshift && \
     /usr/local/bin/fix-permissions /var/lib/jenkins
 
-RUN yum install -y docker
-
-ENV GOVER="1.6" \
-    GOROOT="/opt/go" \
-    GOWORK="/work"
-
-ENV GOPATH=${GOROOT}${GOWORK} \
-    PATH=${PATH}:${GOROOT}/bin:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/
-
-RUN env
-
-RUN mkdir -p $GOROOT$GOWORK && \
-    chown -R 1001:0 $GOROOT && \
-    cd $GOROOT && \
-    curl https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz -o go$GOVER.linux-amd64.tar.gz && \
-    tar -xzf go$GOVER.linux-amd64.tar.gz && \
-    rm go$GOVER.linux-amd64.tar.gz && \
-    go get github.com/openshift/source-to-image && \
-    cd ${GOPATH}/src/github.com/openshift/source-to-image && \
-    hack/build-go.sh
-
 VOLUME ["/var/lib/jenkins"]
 
 USER 1001
