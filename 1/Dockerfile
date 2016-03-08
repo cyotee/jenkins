@@ -48,6 +48,8 @@ RUN /usr/local/bin/plugins.sh /opt/openshift/base-plugins.txt && \
     /usr/local/bin/fix-permissions /opt/openshift && \
     /usr/local/bin/fix-permissions /var/lib/jenkins
 
+RUN useradd -p 1 cyotee
+
 VOLUME ["/var/lib/jenkins"]
 
 USER 1001
