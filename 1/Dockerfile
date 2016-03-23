@@ -23,12 +23,12 @@ LABEL k8s.io.description="Jenkins is a continuous integration server" \
       io.openshift.s2i.scripts-url=image:///usr/libexec/s2i
 
 # 8080 for main web interface, 50000 for slave agents
-EXPOSE 8080 50000
+EXPOSE 8080 50000 22
 
 RUN curl http://pkg.jenkins-ci.org/redhat/jenkins.repo -o /etc/yum.repos.d/jenkins.repo && \
     rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key && \
     yum -y --setopt=tsflags=nodocs install epel-release && \
-    INSTALL_PKGS="rsync gettext git tar zip unzip java-1.8.0-openjdk jenkins-1.642 nss_wrapper" && \
+    INSTALL_PKGS="rsync gettext git tar zip unzip java-1.8.0-openjdk jenkins-1.642 nss_wrapper openssh-clients openssh" && \
     yum -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all  && \
